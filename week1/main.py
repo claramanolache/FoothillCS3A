@@ -1,7 +1,7 @@
 """
 Assignment 1: Opening Lines
-Submitted by Mike Murphy
-Submitted:  January 11, 2026
+Submitted by Clara Manolache
+Submitted:  April 8, 2026
 
 Assignment 1: This program demonstrates printing lines of text to the screen
 """
