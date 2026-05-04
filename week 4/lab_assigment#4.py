@@ -10,14 +10,7 @@ def main():
         "4205": ("Tiled Room", 4),
         "Out": ("Outside", 5)
     }
-    sensors_list = []
-    # loading sensor list
-    keys = list(sensors.keys())
-    for i in range (6):
-        room_num = keys[i]
-        desc = sensors.get(room_num)[0]
-        sens_num = sensors.get(room_num)[1]
-        sensors_list.append((room_num, desc, sens_num))
+    sensor_list = [(room, data[0], data[1]) for room, data in sensors.items()]
 
 if __name__ == "__main__":
     sys.exit(main())
