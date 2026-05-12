@@ -2,6 +2,12 @@
 Assignment Three: Implementing a Menu
 Submitted by Clara Manolache
 Submitted: April 8, 2026
+
+Assignment 3: This assignment adds code to build a menu and support it. The menu provides the interface that a user will use to interact with the program.
+
+Assignment 2: This assignment adds code to prompt the user for a temperature in Celsius and then converts that temperature to a specified different temperature unit.
+
+Assignment 1: This program demonstrates printing lines of text to the screen
 """
 import sys
 def convert_units(celsius_value, units):
