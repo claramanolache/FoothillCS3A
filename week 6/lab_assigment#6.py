@@ -22,7 +22,7 @@ def recursive_sort(list_to_sort, key):
     Bubble sort a list of tuples by either the first or second element,
     first element if key == 0, second element if key == 1
     Uses recursion. Applied on sensor list
-     """
+    """
     pass_list = list_to_sort.copy()
     swaps = False
     len_minus_one = len(list_to_sort) - 1
