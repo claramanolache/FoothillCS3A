@@ -3,7 +3,7 @@ Assignment six: Bubble sort using recursion
 Submitted by Clara Manolache
 Submitted: May 17, 2026
 
-Assignment 5: This program is to practice list recursion and to understand bubble sort algorithm and it's implement.
+Assignment 5: This program is to practice list recursion and to understand bubble sort algorithm, and it's implement.
 adds the recursive sort method
 
 Assignment 4: Builds sensor list to use. Practice with tuples.
@@ -39,7 +39,7 @@ def recursive_sort(list_to_sort, key):
 
 def convert_units(celsius_value, units):
     """
-    From lab assigment #2, takes in a celsius_value
+    From lab assignment #2, takes in a celsius_value
     temperature and converts to fahrenheits or kelvin
     """
     if units == 0:
@@ -125,7 +125,7 @@ def main():
     print("\nList sorted by room name\n", recursive_sort(sensor_list, 1))
     print("\nOriginal unsorted list\n", sensor_list)
 
-    # propmting the user
+    # prompting the user
     while (True):
         print()
         print_menu()
