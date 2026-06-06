@@ -8,7 +8,6 @@ Assigment description:
 Practice making classes. Set up more methods to be implemented later. Does
 backend work to abstract our code.
 """
-import math
 class TempDataset:
     totDatasets = 0
 
@@ -24,34 +23,9 @@ class TempDataset:
 
     def process_file(self, filename):
         """
-        Read file with name passed in, if it doesn't exist return false.
-        Go through the file and add tupels for lines that have reading
-        type 'TEMP'. Return true if no errors met and set is updated.
+        To be implemented later, returns False always
         """
-        try:
-            my_file = open(filename, 'r')
-        except FileNotFoundError:
-            print("File does not exist")
-            return False
-        # If works, continue
-        self._data_set = list()
-        for line in my_file:
-            # reading the file
-            line = line.replace("\n", "")
-            line_list = line.split(",")
-            try:
-                day = int(line_list[0])
-                time = math.floor(float(line_list[1]) * 24)
-                sensor_num = int(line_list[2])
-                reading_type = line_list[3]
-                value = float(line_list[4])
-            # if a data on a line is incorrect, skip the whole line and dont put it in
-            except ValueError:
-                continue
-            # adding data to data set
-            if reading_type == "TEMP":
-                self._data_set.append((day, time, sensor_num, value))
-        return len(self._data_set) != 0
+        return False
 
     def get_summary_statistics(self, filter_list):
         """
@@ -82,12 +56,12 @@ class TempDataset:
 
     def get_loaded_temps(self):
         """
-        If not successfully load on data_set, returns None.
-        Returns length otherwise
+        To be implemented later, return None if the internal dataset
+        is None, otherwise, return 0.
         """
-        if self._data_set is None or len(self._data_set) == 0:
+        if self._data_set is None:
             return None
-        return len(self._data_set)
+        return 0
 
     @classmethod
     def get_num_objects(cls):
@@ -116,3 +90,121 @@ class TempDataset:
         else:
             self._name = value
 
+def main():
+    """
+    Unit test for this assigment
+    """
+    current_set = TempDataset()
+
+    print("First test of get_num_objects: ", end='')
+
+    if TempDataset.get_num_objects() == 1:
+        print("Success")
+    else:
+        print("Fail")
+
+    second_set = TempDataset()
+
+    print("Second test of get_num_objects: ", end='')
+
+    if TempDataset.get_num_objects() == 2:
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing get_name and set_name: ")
+
+    print("- Default Name:", end='')
+
+    if current_set.name == "Unnamed":
+        print("Success")
+    else:
+        print("Fail")
+
+    print("- Try setting a name too short: ", end='')
+
+    try:
+        current_set.name = "to"
+        print("Fail")
+    except ValueError:
+        print("Success")
+
+    print("- Try setting a name too long: ", end='')
+
+    try:
+        current_set.name = "supercalifragilisticexpialidocious"
+        print("Fail")
+    except ValueError:
+        print("Success")
+
+    print("- Try setting a name just right (Goldilocks): ", end='')
+
+    try:
+        current_set.name = "New Name"
+        if current_set.name == "New Name":
+            print("Success")
+        else:
+            print("Fail")
+    except ValueError:
+        print("Fail")
+
+    print("- Make sure we didn't touch the other object: ", end='')
+    if second_set.name == "Unnamed":
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing get_avg_temperature_day_time: ", end='')
+    if current_set.get_avg_temperature_day_time(None, 0, 0) is None:
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing get_num_temps: ", end='')
+    if current_set.get_num_temps(None, 0, 0) is None:
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing get_loaded_temps: ", end='')
+    if current_set.get_loaded_temps() is None:
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing get_summary_statistics: ", end='')
+    if current_set.get_summary_statistics(None) is None:
+        print("Success")
+    else:
+        print("Fail")
+
+    print("Testing process_file: ", end='')
+    if current_set.process_file(None) is False:
+        print("Success")
+    else:
+        print("Fail")
+
+if __name__ == "__main__":
+    main()
+
+"""
+Output from Unit Test:
+
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 8/TempDataset.py 
+First test of get_num_objects: Success
+Second test of get_num_objects: Success
+Testing get_name and set_name: 
+- Default Name:Success
+- Try setting a name too short: Success
+- Try setting a name too long: Success
+- Try setting a name just right (Goldilocks): Success
+- Make sure we didn't touch the other object: Success
+Testing get_avg_temperature_day_time: Success
+Testing get_num_temps: Success
+Testing get_loaded_temps: Success
+Testing get_summary_statistics: Success
+Testing process_file: Success
+
+Process finished with exit code 0
+
+"""
