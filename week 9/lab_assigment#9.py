@@ -4,7 +4,8 @@ Submitted by Clara Manolache
 Submitted: June 6, 2026
 CWID: 20653756
 
-Assigment 9: TODO
+Assigment 9: practice reading files and implement new_file methode. Use two of the instance methods from TempDataset
+ class.
 
 Assignment 7: Adds print_filter() to prints a list of sensors that are active and inactive
 and change_filter() that allows a user to activate a sensor or deactivate it. The change_filter()
@@ -25,6 +26,7 @@ temperature to a specified different temperature unit.
 Assignment 1: This program demonstrates printing lines of text to the screen
 
 """
+from TempDataset import TempDataset
 def recursive_sort(list_to_sort, key):
     """
     Bubble sort a list of tuples by either the first or second element,
@@ -81,8 +83,20 @@ def new_file(dataset):
     """
     Open a new file, if user chooses item 1
     """
-    print("New File Function Called")
-
+    file = input("Please enter the filename of the new dataset: ")
+    if not dataset.process_file(file):
+        print("Unable to load file.")
+        return
+    print(f"Loaded {dataset.get_loaded_temps()} samples\n")
+    file_name = ''
+    while (True):
+        file_name = input("Please provide a 3 to 20 character name for the dataset: ")
+        try:
+            dataset.name = file_name
+        except ValueError:
+            print("Invalid name. Please try again.\n")
+            continue
+        break
 
 def choose_units():
     """
@@ -150,33 +164,86 @@ def main():
     filter_list = [(data[1]) for data in sensors.values()]
 
     sensor_list = recursive_sort(sensor_list, 0)
+    current_set = TempDataset()
     # prompting the user
     while True:
         print()
         print_menu()
         choice = input("What is your choice? ")
-        try:
-            choice = int(choice)
-        except:
-            print("Please enter an integer")
-            continue
-        if choice == 1:
-            new_file(None)
-        elif choice == 2:
+        if choice == '1':
+            print()
+            new_file(current_set)
+        elif choice == '2':
             choose_units()
-        elif choice == 3:
+        elif choice == '3':
             change_filter(sensors, sensor_list, filter_list)
-        elif choice == 4:
+        elif choice == '4':
             print_summary_statistics(None, None)
-        elif choice == 5:
+        elif choice == '5':
             print_temp_by_day_time(None, None)
-        elif choice == 6:
+        elif choice == '6':
             print_histogram(None, None)
-        elif choice == 7:
+        elif choice == '7':
             exit()
         else:
             print("Invalid Choice, please enter an integer between 1 and 7.")
 
-
 if __name__ == "__main__":
     main()
+
+'''
+SAMPLE RUN: 
+
+
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 9/lab_assigment#9.py 
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 1
+
+Please enter the filename of the new dataset: clara.txt
+Unable to load file.
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 1
+
+Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
+Loaded 11724 samples
+
+Please provide a 3 to 20 character name for the dataset: 01234567890123456789x
+Invalid name. Please try again.
+
+Please provide a 3 to 20 character name for the dataset: no
+Invalid name. Please try again.
+
+Please provide a 3 to 20 character name for the dataset: yes
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 7
+
+Process finished with exit code 0
+
+'''
