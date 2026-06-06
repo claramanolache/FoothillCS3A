@@ -82,12 +82,12 @@ class TempDataset:
 
     def get_loaded_temps(self):
         """
-        To be implemented later, return None if the internal dataset
-        is None, otherwise, return 0.
+        If not successfully load on data_set, returns None.
+        Returns length otherwise
         """
-        if self._data_set is None:
+        if self._data_set is None or len(self._data_set) == 0:
             return None
-        return 0
+        return len(self._data_set)
 
     @classmethod
     def get_num_objects(cls):
