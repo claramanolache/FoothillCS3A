@@ -8,6 +8,7 @@ Assigment description:
 Practice making classes. Set up more methods to be implemented later. Does
 backend work to abstract our code.
 """
+import math
 class TempDataset:
     totDatasets = 0
 
@@ -23,9 +24,34 @@ class TempDataset:
 
     def process_file(self, filename):
         """
-        To be implemented later, returns False always
+        Read file with name passed in, if it doesn't exist return false.
+        Go through the file and add tupels for lines that have reading
+        type 'TEMP'. Return true if no errors met and set is updated.
         """
-        return False
+        try:
+            my_file = open(filename, 'r')
+        except FileNotFoundError:
+            print("File does not exist")
+            return False
+        # If works, continue
+        self._data_set = list()
+        for line in my_file:
+            # reading the file
+            line = line.replace("\n", "")
+            line_list = line.split(",")
+            try:
+                day = int(line_list[0])
+                time = math.floor(float(line_list[1]) * 24)
+                sensor_num = int(line_list[2])
+                reading_type = line_list[3]
+                value = float(line_list[4])
+            # if a data on a line is incorrect, skip the whole line and dont put it in
+            except ValueError:
+                continue
+            # adding data to data set
+            if reading_type == "TEMP":
+                self._data_set.append((day, time, sensor_num, value))
+        return len(self._data_set) != 0
 
     def get_summary_statistics(self, filter_list):
         """
