@@ -178,11 +178,11 @@ def main():
         elif choice == '3':
             change_filter(sensors, sensor_list, filter_list)
         elif choice == '4':
-            print_summary_statistics(None, None)
+            print_summary_statistics(current_set, sensor_list)
         elif choice == '5':
-            print_temp_by_day_time(None, None)
+            print_temp_by_day_time(current_set, sensor_list)
         elif choice == '6':
-            print_histogram(None, None)
+            print_histogram(current_set, sensor_list)
         elif choice == '7':
             exit()
         else:
