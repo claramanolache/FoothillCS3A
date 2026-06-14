@@ -171,9 +171,13 @@ def change_filter(sensors, sensor_list, filter_list):
 
 def print_summary_statistics(dataset, active_sensors):
     """
-    Called if user choose item 4
+    Called if user choose item 4, uses method from TempDataset
+    to print min, max, and average temperatures.
     """
-    print("Print Summary Statistics Function Called")
+    results = dataset.get_summary_statistics(active_sensors)
+    print(f"Minimum Temperature: {results[0]} C\n"
+          f"Maximum Temperature: {results[1]} C\n"
+          f"Average Temperature: {results[2]} C\n")
 
 
 def print_temp_by_day_time(dataset, active_sensors):

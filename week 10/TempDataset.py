@@ -66,6 +66,9 @@ class TempDataset:
         """
         if self._data_set is None:
             return None
+
+
+
         return 0, 0, 0
 
     def get_avg_temperature_day_time(self, filter_list, day, time):
@@ -74,7 +77,7 @@ class TempDataset:
         filter_list. Return None if the dataset is not loaded, no sensors in
         filter_list are active, or if filtering results in no matches.
         """
-        if self._data_set is None or not filter_list:
+        if self._data_set is None:
             return None
 
         # Use list comprehension to filter and extract temperatures
@@ -90,14 +93,28 @@ class TempDataset:
         # Calculate and return the average temperature
         return sum(temperatures) / len(temperatures)
 
-    def get_num_temps(self, filter_list, lower_bound, upper_bound):
+    def get_num_temps(self, filter_list):
         """
         To be implemented later, return None if the internal dataset
         is None, otherwise, return 0.
         """
         if self._data_set is None:
             return None
-        return 0
+        temperatures = [
+            entry[3] for entry in self._data_set if entry[2] in filter_list
+        ]
+
+        # If no temperatures exist for the active sensors, return None
+        if not temperatures:
+            return None
+
+        # Calculate min, max, and average
+        min_temp = min(temperatures)
+        max_temp = max(temperatures)
+        avg_temp = sum(temperatures) / len(temperatures)
+
+        # Return tuple of min, max, and average temperatures
+        return min_temp, max_temp, avg_temp
 
     def get_loaded_temps(self):
         """
