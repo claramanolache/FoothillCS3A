@@ -73,6 +73,7 @@ def print_menu():
         "4 - Show summary statistics\n5 - Show temperature by date and time\n"
         "6 - Show histogram of temperatures\n7 - Quit")
 
+
 def print_filter(sensor_list, filter_list):
     """
     Prints the list of filters and clarify which are active
@@ -211,6 +212,7 @@ def main():
     while True:
         print()
         print_menu()
+        print(current_set.get_avg_temperature_day_time(filter_list, 5, 7))  # for testing
         choice = input("What is your choice? ")
         if choice == '1':
             print()
@@ -236,22 +238,7 @@ if __name__ == "__main__":
 '''
 SAMPLE RUN: 
 
-
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 9/lab_assigment#10.py 
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 1
-
-Please enter the filename of the new dataset: clara.txt
-Unable to load file.
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#10.py 
 
 Main Menu
 ---------
@@ -262,18 +249,13 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
+None
 What is your choice? 1
 
 Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
 Loaded 11724 samples
 
-Please provide a 3 to 20 character name for the dataset: 01234567890123456789x
-Invalid name. Please try again.
-
-Please provide a 3 to 20 character name for the dataset: no
-Invalid name. Please try again.
-
-Please provide a 3 to 20 character name for the dataset: yes
+Please provide a 3 to 20 character name for the dataset: name
 
 Main Menu
 ---------
@@ -284,8 +266,102 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
-What is your choice? 7
+20.45544117647059
+What is your choice? 3
 
-Process finished with exit code 0
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
 
+Type the sensor to toggle (e.g. 4201) or x to end Out
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+20.863928571428584
+What is your choice? 3
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4201
+
+4201: Foundations Lab 
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4204
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4205
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4213
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room [ACTIVE]
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4218
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+None
+What is your choice? 
 '''
