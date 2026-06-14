@@ -86,11 +86,17 @@ def new_file(dataset):
     Open a new file, if user chooses item 1
     """
     file = input("Please enter the filename of the new dataset: ")
+
+    # Checks if file is avaliable
     if not dataset.process_file(file):
         print("Unable to load file.")
         return
+
+    # Displays info about file
     print(f"Loaded {dataset.get_loaded_temps()} samples\n")
     file_name = ''
+
+    # Prompting user for name until valid
     while (True):
         file_name = input("Please provide a 3 to 20 character name for the dataset: ")
         try:
@@ -100,12 +106,14 @@ def new_file(dataset):
             continue
         break
 
+# Global constant variable
 UNITS = {
     0: ("Celsius", "C"),
     1: ("Fahrenheit", "F"),
     2: ("Kelvin", "K"),
 }
 
+# Global variable
 current_unit = 0
 
 def choose_units():
@@ -115,8 +123,10 @@ def choose_units():
     Change stored in global variable current_unit.
     """
     global current_unit
+
     # Report current Unit
     print(f"\nCurrent unit in {UNITS[current_unit][0]}\n")
+
     # Give menu and ask user to choose new unit
     while True:
         print("Choose a new unit:")
@@ -124,6 +134,7 @@ def choose_units():
             print(f"{unit} - {UNITS[unit][0]}")
         print()
         choice = input("Which unit? ")
+
         # Make sure it is valid selection
         try:
             choice = int(choice)
