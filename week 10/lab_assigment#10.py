@@ -246,7 +246,7 @@ if __name__ == "__main__":
     main()
 
 '''
-SAMPLE RUN: 
+UNIT TESTING: 
 
 /usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#10.py 
 
@@ -373,7 +373,232 @@ Main Menu
 6 - Show histogram of temperatures
 7 - Quit
 None
-What is your choice? 
+What is your choice? 7
+
+Process finished with exit code 0
+--------------------------------------------------------------------------------------------------
+
+UNIT TESTING #2:
+
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#10.py 
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+Please load data file and make sure at least one sensor is active
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 1
+
+Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
+Loaded 11724 samples
+
+Please provide a 3 to 20 character name for the dataset: name
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 16.55 C
+Maximum Temperature: 28.42 C
+Average Temperature: 21.47 C
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 2
+
+Current unit in Celsius
+
+Choose a new unit:
+0 - Celsius
+1 - Fahrenheit
+2 - Kelvin
+
+Which unit? 1
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 61.79 F
+Maximum Temperature: 83.16 F
+Average Temperature: 70.64 F
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 3
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4201
+
+4201: Foundations Lab 
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4204
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 61.79 F
+Maximum Temperature: 83.16 F
+Average Temperature: 70.13 F
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 3
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4205
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4213
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4218
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end Out
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+Please load data file and make sure at least one sensor is active
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 7
+
+Process finished with exit code 0
 
 --------------------------------------------------------------------------------------------------
 
