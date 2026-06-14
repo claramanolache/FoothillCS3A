@@ -175,9 +175,15 @@ def print_summary_statistics(dataset, active_sensors):
     to print min, max, and average temperatures.
     """
     results = dataset.get_summary_statistics(active_sensors)
-    print(f"Minimum Temperature: {results[0]} C\n"
-          f"Maximum Temperature: {results[1]} C\n"
-          f"Average Temperature: {results[2]} C\n")
+    if results is None:
+        print("Please load data file and make sure at least one sensor is active")
+        return
+
+    results = tuple(convert_units(float(value), current_unit) for value in results)
+    print("\nSummary statistics for Test Week")
+    print(f"Minimum Temperature: {results[0]:.2f} {UNITS[current_unit][1]}\n"
+          f"Maximum Temperature: {results[1]:.2f} {UNITS[current_unit][1]}\n"
+          f"Average Temperature: {results[2]:.2f} {UNITS[current_unit][1]}\n")
 
 
 def print_temp_by_day_time(dataset, active_sensors):
@@ -216,7 +222,7 @@ def main():
     while True:
         print()
         print_menu()
-        print(current_set.get_avg_temperature_day_time(filter_list, 5, 7))  # for testing
+        #print(current_set.get_avg_temperature_day_time(filter_list, 5, 7))  # for testing
         choice = input("What is your choice? ")
         if choice == '1':
             print()
@@ -226,7 +232,7 @@ def main():
         elif choice == '3':
             change_filter(sensors, sensor_list, filter_list)
         elif choice == '4':
-            print_summary_statistics(current_set, sensor_list)
+            print_summary_statistics(current_set, filter_list)
         elif choice == '5':
             print_temp_by_day_time(current_set, sensor_list)
         elif choice == '6':
@@ -368,4 +374,233 @@ Main Menu
 7 - Quit
 None
 What is your choice? 
+
+--------------------------------------------------------------------------------------------------
+
+TESTING get_summary_statistics():
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#10.py 
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 1
+
+Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
+Loaded 11724 samples
+
+Please provide a 3 to 20 character name for the dataset: name
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 16.55 C
+Maximum Temperature: 28.42 C
+Average Temperature: 21.47 C
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 3
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4201
+
+4201: Foundations Lab 
+4204: CS Lab [ACTIVE]
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4204
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room [ACTIVE]
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4205
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center [ACTIVE]
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4213
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room [ACTIVE]
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end 4218
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside [ACTIVE]
+
+Type the sensor to toggle (e.g. 4201) or x to end Out
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+Please load data file and make sure at least one sensor is active
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 3
+
+4201: Foundations Lab 
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4201
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab 
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end 4204
+
+4201: Foundations Lab [ACTIVE]
+4204: CS Lab [ACTIVE]
+4205: Tiled Room 
+4213: STEM Center 
+4218: Workshop Room 
+Out: Outside 
+
+Type the sensor to toggle (e.g. 4201) or x to end x
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 18.37 C
+Maximum Temperature: 25.34 C
+Average Temperature: 22.04 C
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 2
+
+Current unit in Celsius
+
+Choose a new unit:
+0 - Celsius
+1 - Fahrenheit
+2 - Kelvin
+
+Which unit? 1
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 4
+
+Summary statistics for Test Week
+Minimum Temperature: 65.07 F
+Maximum Temperature: 77.61 F
+Average Temperature: 71.68 F
+
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
+What is your choice? 7
+
+Process finished with exit code 0
 '''

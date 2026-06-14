@@ -64,12 +64,22 @@ class TempDataset:
         To be implemented later, return None if the internal dataset
         is None, otherwise, return default tuple.
         """
-        if self._data_set is None:
+        if self._data_set is None or not filter_list:
             return None
 
+        temperatures = [
+            entry[3] for entry in self._data_set if entry[2] in filter_list
+        ]
 
+        #print(f"temp {temperatures}")
+        #print(f"filter: {filter_list}")
+        # Calculate min, max, and average
+        min_temp = min(temperatures)
+        max_temp = max(temperatures)
+        avg_temp = sum(temperatures) / len(temperatures)
 
-        return 0, 0, 0
+        # Return tuple of min, max, and average temperatures
+        return min_temp, max_temp, avg_temp
 
     def get_avg_temperature_day_time(self, filter_list, day, time):
         """
@@ -100,21 +110,7 @@ class TempDataset:
         """
         if self._data_set is None:
             return None
-        temperatures = [
-            entry[3] for entry in self._data_set if entry[2] in filter_list
-        ]
-
-        # If no temperatures exist for the active sensors, return None
-        if not temperatures:
-            return None
-
-        # Calculate min, max, and average
-        min_temp = min(temperatures)
-        max_temp = max(temperatures)
-        avg_temp = sum(temperatures) / len(temperatures)
-
-        # Return tuple of min, max, and average temperatures
-        return min_temp, max_temp, avg_temp
+        return 0
 
     def get_loaded_temps(self):
         """
