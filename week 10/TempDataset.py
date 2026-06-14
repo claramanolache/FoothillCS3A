@@ -70,12 +70,25 @@ class TempDataset:
 
     def get_avg_temperature_day_time(self, filter_list, day, time):
         """
-        To be implemented later, return None if the internal dataset
-        is None, otherwise, return 0.
+        Calculate the average temperature for a specific day and time based on the
+        filter_list. Return None if the dataset is not loaded, no sensors in
+        filter_list are active, or if filtering results in no matches.
         """
-        if self._data_set is None:
+        if self._data_set is None or not filter_list:
             return None
-        return 0
+
+        # Use list comprehension to filter and extract temperatures
+        temperatures = [
+            entry[3] for entry in self._data_set
+            if entry[0] == day and entry[1] == time and entry[2] in filter_list
+        ]
+
+        # Return None if no temperatures were found
+        if not temperatures:
+            return None
+
+        # Calculate and return the average temperature
+        return sum(temperatures) / len(temperatures)
 
     def get_num_temps(self, filter_list, lower_bound, upper_bound):
         """
