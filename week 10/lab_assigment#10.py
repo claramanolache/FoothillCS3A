@@ -4,7 +4,8 @@ Submitted by Clara Manolache
 Submitted: June 6, 2026
 CWID: 20653756
 
-Assignment 10: TODO
+Assignment 10: implemented the choose unit function and get_avg_temperature_day_time function.
+Practice with  global variables. TODO
 
 Assigment 9: practice reading files and implement new_file methode. Use two of the instance methods from TempDataset
  class.
@@ -226,7 +227,7 @@ if __name__ == "__main__":
 SAMPLE RUN: 
 
 
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 9/lab_assigment#9.py 
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 9/lab_assigment#10.py 
 
 Main Menu
 ---------
