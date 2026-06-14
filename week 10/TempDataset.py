@@ -1,8 +1,11 @@
 """
 Assignment Nine: Reading and using the contents of a file
 Submitted by Clara Manolache
-Submitted: June 6, 2026
+Submitted: June 14, 2026
 CWID: 20653756
+
+assignment 10: Implemented the get_avg_temperature_day_time method for practice
+with list comprehension and global variables.
 
 Assignment 9:
 Implemented methods process_file (to practice working with files) and

@@ -1,11 +1,10 @@
 """
 Assignment nine: Reading and using the contents of a file
 Submitted by Clara Manolache
-Submitted: June 6, 2026
+Submitted: June 14, 2026
 CWID: 20653756
 
-Assignment 10: implemented the choose unit function and get_avg_temperature_day_time function.
-Practice with  global variables. TODO
+Assignment 10: implemented the choose unit function for practice with  global variables.
 
 Assigment 9: practice reading files and implement new_file methode. Use two of the instance methods from TempDataset
  class.
