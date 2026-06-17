@@ -4,6 +4,8 @@ Submitted by Clara Manolache
 Submitted: June 14, 2026
 CWID: 20653756
 
+Assigment 11: Practice using the Pandas libary and implemented the 5th option (average temperature by day and time).
+
 Assignment 10: implemented the choose unit function for practice with  global variables.
 
 Assigment 9: practice reading files and implement new_file methode. Use two of the instance methods from TempDataset
@@ -28,6 +30,7 @@ temperature to a specified different temperature unit.
 Assignment 1: This program demonstrates printing lines of text to the screen
 
 """
+import pandas as pd
 from TempDataset import TempDataset
 def recursive_sort(list_to_sort, key):
     """
@@ -186,12 +189,70 @@ def print_summary_statistics(dataset, active_sensors):
           f"Average Temperature: {results[2]:.2f} {UNITS[current_unit][1]}\n")
 
 
+# constants for day/time
+
+DAYS = {
+    0 : "SUN",
+    1 : "MON",
+    2 : "TUE",
+    3 : "WED",
+    4 : "THU",
+    5 : "FRI",
+    6 : "SAT"
+}
+
+HOURS = {
+    0 : "Mid-1AM  ",
+    1 : "1AM-2AM  ",
+    2 : "2AM-3AM  ",
+    3 : "3AM-4AM  ",
+    4 : "4AM-5AM  ",
+    5 : "5AM-6AM  ",
+    6 : "6AM-7AM  ",
+    7 : "7AM-8AM  ",
+    8 : "8AM-9AM  ",
+    9 : "9AM-10AM ",
+    10 : "10AM-11AM",
+    11 : "11AM-NOON",
+    12 : "NOON-1PM ",
+    13 : "1PM-2PM  ",
+    14 : "2PM-3PM  ",
+    15 : "3PM-4PM  ",
+    16 : "4PM-5PM  ",
+    17 : "5PM-6PM  ",
+    18 : "6PM-7PM  ",
+    19 : "7PM-8PM  ",
+    20 : "8PM-9PM  ",
+    21 : "9PM-10PM ",
+    22 : "10PM-11PM",
+    23 : "11PM-MID ",
+}
+
+
 def print_temp_by_day_time(dataset, active_sensors):
     """
-    Called if user choose item 5
+    Called if the user chooses item 5. Uses Pandas to create a DataFrame that stores
+    average temperatures for each day and time of day. Uses DAYS and HOURS constants
+    to create the row and col labels. Rounds to 1 decimal place.
     """
-    print("Print Temp By Day/Time Function Called")
-
+    temps = dataset.get_loaded_temps()
+    if temps is None:
+        print("Please load data file and make sure at least one sensor is active")
+        return
+    data_avg = dict()
+    for days in DAYS:
+        hours_avg = []
+        for hours in HOURS:
+            temp = dataset.get_avg_temperature_day_time(active_sensors, days, hours)
+            hours_avg.append(convert_units(temp, current_unit))
+        data_avg[days] = hours_avg
+    df = pd.DataFrame(data_avg)
+    df.rename(index=HOURS, inplace=True)
+    df.rename(columns=DAYS, inplace=True)
+    df = df.round(1)
+    print(f"\nAverage Temperatures for {dataset.name}\n"
+          f"Units are in {UNITS[current_unit][0]}\n")
+    print(df)
 
 def print_histogram(dataset, active_sensors):
     """
@@ -234,9 +295,9 @@ def main():
         elif choice == '4':
             print_summary_statistics(current_set, filter_list)
         elif choice == '5':
-            print_temp_by_day_time(current_set, sensor_list)
+            print_temp_by_day_time(current_set, filter_list)
         elif choice == '6':
-            print_histogram(current_set, sensor_list)
+            print_histogram(current_set, filter_list)
         elif choice == '7':
             exit()
         else:
@@ -248,7 +309,7 @@ if __name__ == "__main__":
 '''
 UNIT TESTING: 
 
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#11.py 
+/Users/claramanolache/FoothillCS3A/.venv/bin/python /Users/claramanolache/FoothillCS3A/week 11/lab_assigment#11.py 
 
 Main Menu
 ---------
@@ -259,13 +320,12 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
-None
 What is your choice? 1
 
 Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
 Loaded 11724 samples
 
-Please provide a 3 to 20 character name for the dataset: name
+Please provide a 3 to 20 character name for the dataset: test name
 
 Main Menu
 ---------
@@ -276,7 +336,46 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
-20.45544117647059
+What is your choice? 5
+
+Average Temperatures for test name
+Units are in Celsius
+
+            SUN   MON   TUE   WED   THU   FRI   SAT
+Mid-1AM    21.1  20.6  21.7  21.5  21.0  21.1  19.8
+1AM-2AM    21.1  20.5  21.6  21.5  20.9  21.1  19.9
+2AM-3AM    21.1  20.4  21.5  21.4  20.9  21.1  19.8
+3AM-4AM    21.1  20.4  21.4  21.3  20.8  21.0  19.8
+4AM-5AM    21.1  20.4  21.4  21.2  20.8  21.0  19.9
+5AM-6AM    21.0  20.2  21.4  21.2  20.7  20.8  19.8
+6AM-7AM    20.9  19.9  21.3  21.0  20.6  20.6  19.8
+7AM-8AM    20.7  20.0  21.1  20.9  20.6  20.5  19.9
+8AM-9AM    20.6  20.2  21.2  20.8  20.7  20.3  19.9
+9AM-10AM   20.9  21.1  22.0  20.9  21.2  20.2  20.2
+10AM-11AM  21.2  21.9  22.8  21.5  22.1  20.4  20.6
+11AM-NOON  21.5  22.6  23.4  22.2  22.7  20.7  20.8
+NOON-1PM   21.6  23.0  23.9  22.6  23.0  21.0  21.0
+1PM-2PM    21.7  23.3  24.0  23.1  23.2  21.0  21.0
+2PM-3PM    21.9  23.6  24.2  23.5  23.3  21.1  21.0
+3PM-4PM    21.9  24.0  24.4  23.6  23.5  21.1  20.8
+4PM-5PM    21.7  24.2  24.5  23.8  23.6  21.0  20.9
+5PM-6PM    21.6  24.1  24.4  23.7  23.7  20.8  20.9
+6PM-7PM    21.5  23.4  23.9  23.4  23.2  20.7  20.7
+7PM-8PM    21.4  23.0  23.2  22.8  22.3  20.3  20.5
+8PM-9PM    21.2  22.6  22.3  22.1  21.6  19.8  20.2
+9PM-10PM   21.0  22.3  21.8  21.7  21.2  19.7  19.9
+10PM-11PM  20.8  22.0  21.7  21.5  21.2  19.8  19.8
+11PM-MID   20.8  21.9  21.6  21.2  21.1  19.8  19.7
+
+Main Menu
+---------
+1 - Process a new data file
+2 - Choose units
+3 - Edit room filter
+4 - Show summary statistics
+5 - Show temperature by date and time
+6 - Show histogram of temperatures
+7 - Quit
 What is your choice? 3
 
 4201: Foundations Lab [ACTIVE]
@@ -286,36 +385,6 @@ What is your choice? 3
 4218: Workshop Room [ACTIVE]
 Out: Outside [ACTIVE]
 
-Type the sensor to toggle (e.g. 4201) or x to end Out
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end x
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-20.863928571428584
-What is your choice? 3
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside 
-
 Type the sensor to toggle (e.g. 4201) or x to end 4201
 
 4201: Foundations Lab 
@@ -323,7 +392,7 @@ Type the sensor to toggle (e.g. 4201) or x to end 4201
 4205: Tiled Room [ACTIVE]
 4213: STEM Center [ACTIVE]
 4218: Workshop Room [ACTIVE]
-Out: Outside 
+Out: Outside [ACTIVE]
 
 Type the sensor to toggle (e.g. 4201) or x to end 4204
 
@@ -332,7 +401,7 @@ Type the sensor to toggle (e.g. 4201) or x to end 4204
 4205: Tiled Room [ACTIVE]
 4213: STEM Center [ACTIVE]
 4218: Workshop Room [ACTIVE]
-Out: Outside 
+Out: Outside [ACTIVE]
 
 Type the sensor to toggle (e.g. 4201) or x to end 4205
 
@@ -341,24 +410,15 @@ Type the sensor to toggle (e.g. 4201) or x to end 4205
 4205: Tiled Room 
 4213: STEM Center [ACTIVE]
 4218: Workshop Room [ACTIVE]
-Out: Outside 
+Out: Outside [ACTIVE]
 
-Type the sensor to toggle (e.g. 4201) or x to end 4213
+Type the sensor to toggle (e.g. 4201) or x to end Out
 
 4201: Foundations Lab 
 4204: CS Lab 
 4205: Tiled Room 
-4213: STEM Center 
+4213: STEM Center [ACTIVE]
 4218: Workshop Room [ACTIVE]
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end 4218
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
 Out: Outside 
 
 Type the sensor to toggle (e.g. 4201) or x to end x
@@ -372,60 +432,36 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
-None
-What is your choice? 7
+What is your choice? 5
 
-Process finished with exit code 0
---------------------------------------------------------------------------------------------------
+Average Temperatures for test name
+Units are in Celsius
 
-UNIT TESTING #2:
-
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#11.py 
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-Please load data file and make sure at least one sensor is active
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 1
-
-Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
-Loaded 11724 samples
-
-Please provide a 3 to 20 character name for the dataset: name
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 16.55 C
-Maximum Temperature: 28.42 C
-Average Temperature: 21.47 C
-
+            SUN   MON   TUE   WED   THU   FRI   SAT
+Mid-1AM    20.4  20.2  22.6  21.8  21.4  21.5  19.3
+1AM-2AM    20.5  20.2  22.5  21.7  21.3  21.4  19.4
+2AM-3AM    20.6  20.1  22.4  21.6  21.1  21.3  19.4
+3AM-4AM    20.7  20.0  22.3  21.5  21.0  21.3  19.5
+4AM-5AM    20.7  20.0  22.3  21.4  20.9  21.2  19.5
+5AM-6AM    20.7  20.0  22.3  21.4  20.9  21.1  19.5
+6AM-7AM    20.4  20.0  22.3  21.2  20.8  20.9  19.5
+7AM-8AM    20.1  20.1  22.1  21.1  20.9  20.6  19.5
+8AM-9AM    19.7  20.1  21.7  20.9  20.9  20.2  19.5
+9AM-10AM   19.6  20.6  22.0  20.8  21.5  19.5  19.6
+10AM-11AM  19.5  21.3  22.4  21.0  22.0  19.2  19.5
+11AM-NOON  19.4  21.6  22.9  21.3  22.3  19.2  19.2
+NOON-1PM   19.3  21.8  22.8  21.8  22.3  19.1  18.8
+1PM-2PM    19.3  22.2  23.1  22.4  22.2  18.9  18.6
+2PM-3PM    19.4  22.7  23.5  22.8  22.4  18.9  18.5
+3PM-4PM    19.3  22.9  23.7  23.3  22.6  18.9  18.4
+4PM-5PM    19.3  23.2  24.0  23.6  23.0  18.9  18.3
+5PM-6PM    19.3  23.4  24.3  23.8  23.4  18.9  18.3
+6PM-7PM    19.3  23.0  24.0  23.7  23.0  18.8  18.2
+7PM-8PM    19.6  23.0  23.4  23.0  22.5  18.7  18.2
+8PM-9PM    19.9  23.0  22.8  22.5  22.0  18.5  18.2
+9PM-10PM   20.1  23.0  22.3  22.0  21.7  18.6  18.3
+10PM-11PM  20.2  22.9  22.1  21.8  21.6  19.0  18.6
+11PM-MID   20.3  22.8  22.0  21.6  21.5  19.2  18.7
 
 Main Menu
 ---------
@@ -456,365 +492,36 @@ Main Menu
 5 - Show temperature by date and time
 6 - Show histogram of temperatures
 7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 61.79 F
-Maximum Temperature: 83.16 F
-Average Temperature: 70.64 F
-
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 3
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4201
-
-4201: Foundations Lab 
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4204
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end x
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 61.79 F
-Maximum Temperature: 83.16 F
-Average Temperature: 70.13 F
-
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 3
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4205
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4213
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4218
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end Out
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end x
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-Please load data file and make sure at least one sensor is active
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 7
-
-Process finished with exit code 0
-
---------------------------------------------------------------------------------------------------
-
-TESTING get_summary_statistics():
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 10/lab_assigment#11.py 
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 1
-
-Please enter the filename of the new dataset: /Users/claramanolache/FoothillCS3A/resources/Temperatures_2025-11-07.csv
-Loaded 11724 samples
-
-Please provide a 3 to 20 character name for the dataset: name
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 16.55 C
-Maximum Temperature: 28.42 C
-Average Temperature: 21.47 C
-
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 3
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4201
-
-4201: Foundations Lab 
-4204: CS Lab [ACTIVE]
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4204
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room [ACTIVE]
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4205
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center [ACTIVE]
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4213
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room [ACTIVE]
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end 4218
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside [ACTIVE]
-
-Type the sensor to toggle (e.g. 4201) or x to end Out
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end x
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-Please load data file and make sure at least one sensor is active
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 3
-
-4201: Foundations Lab 
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end 4201
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab 
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end 4204
-
-4201: Foundations Lab [ACTIVE]
-4204: CS Lab [ACTIVE]
-4205: Tiled Room 
-4213: STEM Center 
-4218: Workshop Room 
-Out: Outside 
-
-Type the sensor to toggle (e.g. 4201) or x to end x
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 18.37 C
-Maximum Temperature: 25.34 C
-Average Temperature: 22.04 C
-
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 2
-
-Current unit in Celsius
-
-Choose a new unit:
-0 - Celsius
-1 - Fahrenheit
-2 - Kelvin
-
-Which unit? 1
-
-Main Menu
----------
-1 - Process a new data file
-2 - Choose units
-3 - Edit room filter
-4 - Show summary statistics
-5 - Show temperature by date and time
-6 - Show histogram of temperatures
-7 - Quit
-What is your choice? 4
-
-Summary statistics for Test Week
-Minimum Temperature: 65.07 F
-Maximum Temperature: 77.61 F
-Average Temperature: 71.68 F
-
+What is your choice? 5
+
+Average Temperatures for test name
+Units are in Fahrenheit
+
+            SUN   MON   TUE   WED   THU   FRI   SAT
+Mid-1AM    68.8  68.4  72.7  71.3  70.6  70.7  66.8
+1AM-2AM    69.0  68.3  72.5  71.1  70.3  70.5  66.9
+2AM-3AM    69.1  68.3  72.3  70.9  70.0  70.4  67.0
+3AM-4AM    69.2  68.1  72.2  70.8  69.8  70.3  67.0
+4AM-5AM    69.2  68.1  72.1  70.6  69.7  70.1  67.1
+5AM-6AM    69.2  68.0  72.1  70.5  69.6  70.0  67.1
+6AM-7AM    68.8  67.9  72.1  70.1  69.4  69.6  67.1
+7AM-8AM    68.1  68.1  71.8  70.0  69.5  69.2  67.1
+8AM-9AM    67.4  68.1  71.1  69.5  69.7  68.3  67.1
+9AM-10AM   67.3  69.1  71.5  69.4  70.6  67.1  67.2
+10AM-11AM  67.1  70.4  72.3  69.9  71.5  66.6  67.2
+11AM-NOON  66.9  70.9  73.2  70.4  72.2  66.6  66.6
+NOON-1PM   66.8  71.2  73.1  71.3  72.1  66.3  65.9
+1PM-2PM    66.7  71.9  73.6  72.3  71.9  66.1  65.5
+2PM-3PM    66.9  72.8  74.3  73.1  72.3  66.1  65.2
+3PM-4PM    66.7  73.3  74.7  74.0  72.7  66.1  65.0
+4PM-5PM    66.7  73.8  75.1  74.4  73.4  66.0  64.9
+5PM-6PM    66.7  74.2  75.7  74.9  74.0  66.0  64.9
+6PM-7PM    66.7  73.5  75.1  74.6  73.5  65.8  64.8
+7PM-8PM    67.2  73.4  74.0  73.4  72.5  65.7  64.8
+8PM-9PM    67.8  73.4  73.0  72.6  71.7  65.4  64.7
+9PM-10PM   68.1  73.3  72.2  71.7  71.1  65.5  64.9
+10PM-11PM  68.3  73.2  71.8  71.3  70.9  66.3  65.5
+11PM-MID   68.6  73.0  71.5  70.9  70.8  66.6  65.7
 
 Main Menu
 ---------

@@ -98,7 +98,7 @@ if __name__ == "__main__":
 """
 Sample Output #1:
 ---------------------------------------------------------------------------------------------------------------------
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week3 (menu)/lab_assignment 3.py 
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 3 (menu)/lab_assignment 3.py 
 STEM Center Temperature Project
 Clara Manolache
 
@@ -202,7 +202,7 @@ Process finished with exit code 0
 
 Sample Output #2:
 ---------------------------------------------------------------------------------------------------------------------
-/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week3 (menu)/lab_assignment 3.py 
+/usr/bin/python3 /Users/claramanolache/FoothillCS3A/week 3 (menu)/lab_assignment 3.py 
 STEM Center Temperature Project
 Clara Manolache
 
